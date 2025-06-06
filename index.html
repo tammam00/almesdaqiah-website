@@ -3,9 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المصداقية لتأجير الوحدات السكنية</title>
-<meta name="description" content="موقع المصداقية لتأجير الوحدات السكنية في صلالة - أفضل الأسعار وأجود الخدمات">
-<meta name="keywords" content="تأجير، وحدات سكنية، صلالة، عمان، شقق، غرف، فلل">
+<title>المصداقية لتأجير الوحدات السكنية - صلالة، عمان</title>
+<meta name="description" content="موقع المصداقية لتأجير الوحدات السكنية في صلالة - أفضل الأسعار وأجود الخدمات لتأجير الشقق والغرف والفلل">
+<meta name="keywords" content="تأجير، وحدات سكنية، صلالة، عمان، شقق، غرف، فلل، المصداقية">
+<meta name="author" content="المصداقية لتأجير الوحدات السكنية">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://almesdaqiah-website.netlify.app/">
+<meta property="og:title" content="المصداقية لتأجير الوحدات السكنية">
+<meta property="og:description" content="أفضل الوحدات السكنية للإيجار في صلالة، عمان">
+<meta property="og:image" content="https://almesdaqiah-website.netlify.app/preview.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://almesdaqiah-website.netlify.app/">
+<meta property="twitter:title" content="المصداقية لتأجير الوحدات السكنية">
+<meta property="twitter:description" content="أفضل الوحدات السكنية للإيجار في صلالة، عمان">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -248,6 +263,22 @@ animation: pulse 1.5s infinite;
 0%, 100% { opacity: 1; }
 50% { opacity: 0.5; }
 }
+
+/* تحسينات إضافية للمظهر */
+.hero-gradient {
+background: linear-gradient(135deg, #003f7f 0%, #4a90e2 100%);
+}
+
+.loading-skeleton {
+background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+background-size: 200% 100%;
+animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+0% { background-position: 200% 0; }
+100% { background-position: -200% 0; }
+}
 </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-all duration-300">
@@ -258,7 +289,7 @@ animation: pulse 1.5s infinite;
 </div>
 
 <!-- Header -->
-<header class="bg-white dark:bg-gray-800 shadow-lg transition-all duration-300">
+<header class="bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 sticky top-0 z-30">
 <div class="container mx-auto px-4 py-4">
 <div class="flex justify-between items-center">
 <div class="flex items-center space-x-4 space-x-reverse">
@@ -282,6 +313,28 @@ animation: pulse 1.5s infinite;
 </div>
 </div>
 </header>
+
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-4xl md:text-5xl font-bold mb-4">مرحباً بكم في المصداقية</h2>
+<p class="text-xl md:text-2xl mb-8 text-blue-100">أفضل الوحدات السكنية للإيجار في صلالة</p>
+<div class="flex flex-wrap justify-center gap-4 text-sm md:text-base">
+<div class="flex items-center space-x-2 space-x-reverse bg-white bg-opacity-20 px-4 py-2 rounded-full">
+<span>🏠</span>
+<span>أكثر من 50 وحدة</span>
+</div>
+<div class="flex items-center space-x-2 space-x-reverse bg-white bg-opacity-20 px-4 py-2 rounded-full">
+<span>⭐</span>
+<span>خدمة 5 نجوم</span>
+</div>
+<div class="flex items-center space-x-2 space-x-reverse bg-white bg-opacity-20 px-4 py-2 rounded-full">
+<span>📱</span>
+<span>حجز فوري</span>
+</div>
+</div>
+</div>
+</section>
 
 <!-- Main Content -->
 <main id="main-content" class="container mx-auto px-4 py-8">
@@ -338,10 +391,10 @@ animation: pulse 1.5s infinite;
 </div>
 
 <!-- Loading Spinner -->
-<div id="loadingSpinner" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+<div id="loadingSpinner" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
 <div class="bg-white dark:bg-gray-800 rounded-lg p-6 flex items-center space-x-4 space-x-reverse">
 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-oman-blue"></div>
-<span class="text-adaptive font-medium">جاري تحميل البيانات...</span>
+<span class="text-adaptive font-medium">جاري تحميل البيانات من GitHub...</span>
 </div>
 </div>
 </main>
@@ -425,7 +478,9 @@ animation: pulse 1.5s infinite;
 </div>
 <div class="border-t border-gray-600 mt-8 pt-8 text-center">
 <p>&copy; 2024 المصداقية لتأجير الوحدات السكنية. جميع الحقوق محفوظة.</p>
-<p class="text-sm text-gray-400 mt-2">تم التطوير بـ ❤️ في صلالة، عمان</p>
+<p class="text-sm text-gray-400 mt-2">تم التطوير بـ ❤️ في صلالة، عمان |
+<a href="https://github.com/tammam00/almesdaqiah-website" class="hover:text-white transition-colors">GitHub</a>
+</p>
 </div>
 </div>
 </footer>
@@ -456,15 +511,649 @@ DATA_SIGNATURE: 'ALMOSDAQIYA_RENTAL_DATA_V2'
 }
 };
 
-// باقي الكود JavaScript هنا...
-// (سأضيفه في commit منفصل لتسهيل القراءة)
-console.log('🏠 موقع المصداقية لتأجير الوحدات السكنية');
-console.log('📡 جاري تحميل البيانات من:', APP_CONFIG.GITHUB_CONFIG);
-// TODO: إضافة باقي كود JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-console.log('✅ تم تحميل الموقع بنجاح');
-// سيتم إضافة باقي الوظائف قريباً
+// أسماء الأيام والشهور العربية
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_MONTHS = [
+'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+];
+
+// ===== نظام التزامن مع GitHub Repository =====
+class GitHubRepoSync {
+constructor() {
+// استخدام الإعدادات من APP_CONFIG
+this.owner = APP_CONFIG.GITHUB_CONFIG.owner;
+this.repo = APP_CONFIG.GITHUB_CONFIG.repo;
+this.branch = APP_CONFIG.GITHUB_CONFIG.branch;
+this.dataFile = APP_CONFIG.GITHUB_CONFIG.dataFile;
+
+// بناء الروابط المطلوبة
+this.baseUrl = `https://api.github.com/repos/${this.owner}/${this.repo}`;
+this.rawUrl = `https://raw.githubusercontent.com/${this.owner}/${this.repo}/${this.branch}/${this.dataFile}`;
+
+console.log('🔧 تهيئة نظام GitHub Repository:');
+console.log('📁 Repository:', `${this.owner}/${this.repo}`);
+console.log('🔗 Raw URL:', this.rawUrl);
+}
+
+// 📖 قراءة البيانات (عامة، بدون token)
+async fetchData() {
+try {
+console.log('📡 جاري جلب البيانات من GitHub Repository...');
+
+// إضافة timestamp لمنع التخزين المؤقت
+const url = this.rawUrl + '?t=' + Date.now();
+const response = await fetch(url, {
+method: 'GET',
+headers: {
+'Accept': 'application/json',
+'Cache-Control': 'no-cache'
+}
 });
+
+if (response.ok) {
+const data = await response.json();
+console.log('✅ تم جلب البيانات بنجاح:', {
+version: data.version || 'غير محدد',
+lastUpdate: data.lastUpdate || 'غير محدد',
+unitsCount: data.units?.length || 0,
+messagesCount: data.messages?.length || 0
+});
+return data;
+} else {
+throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+}
+} catch (error) {
+console.warn('❌ فشل في جلب البيانات من GitHub Repository:', error.message);
+return null;
+}
+}
+
+// 💾 حفظ البيانات (يحتاج token للإدارة)
+async saveData(data, token) {
+if (!token) {
+console.warn('🔑 يحتاج Personal Access Token للحفظ في GitHub');
+return false;
+}
+
+try {
+console.log('💾 جاري حفظ البيانات في GitHub Repository...');
+
+// 1️⃣ الحصول على SHA الحالي للملف (مطلوب للتحديث)
+console.log('🔍 جاري البحث عن SHA الملف الحالي...');
+const sha = await this.getFileSHA(token);
+
+// إعداد طلب التحديث
+const requestBody = {
+message: `تحديث البيانات - ${new Date().toLocaleString('ar-SA')}`,
+content: '',
+branch: this.branch,
+committer: {
+name: 'AlMosdaqiya Admin',
+email: 'admin@almosdaqiya.local'
+}
+};
+
+// إضافة SHA فقط إذا كان الملف موجوداً
+if (sha && sha !== 'CREATE_NEW_FILE') {
+requestBody.sha = sha;
+console.log('✅ تم العثور على SHA:', sha.substring(0, 8) + '...');
+} else {
+console.log('📄 سيتم إنشاء ملف جديد');
+}
+
+// 2️⃣ إعداد البيانات المحدثة
+const updatedData = {
+...data,
+signature: APP_CONFIG.SYNC_CONFIG.DATA_SIGNATURE,
+lastUpdate: new Date().toISOString(),
+version: this.incrementVersion(data.version),
+updatedBy: 'admin_' + Date.now(),
+metadata: {
+...data.metadata,
+lastModified: new Date().toISOString(),
+source: 'GitHub Repository API'
+}
+};
+
+// 3️⃣ تحويل البيانات إلى JSON منسق
+const jsonContent = JSON.stringify(updatedData, null, 2);
+
+// 4️⃣ تحويل إلى Base64 (مطلوب لـ GitHub API) مع معالجة UTF-8
+const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+
+// 5️⃣ إرسال التحديث إلى GitHub
+console.log('📤 جاري رفع التحديث إلى GitHub...');
+
+// إعداد البيانات النهائية للإرسال
+requestBody.content = base64Content;
+
+const response = await fetch(`${this.baseUrl}/contents/${this.dataFile}`, {
+method: 'PUT',
+headers: {
+'Authorization': `Bearer ${token}`,
+'Accept': 'application/vnd.github.v3+json',
+'Content-Type': 'application/json',
+'User-Agent': 'AlMosdaqiya-Rental-App/1.0'
+},
+body: JSON.stringify(requestBody)
+});
+
+if (response.ok) {
+const result = await response.json();
+console.log('✅ تم حفظ البيانات في GitHub بنجاح!');
+console.log('📊 معلومات الحفظ:', {
+sha: result.content.sha.substring(0, 8) + '...',
+size: result.content.size + ' bytes',
+downloadUrl: result.content.download_url
+});
+return true;
+} else {
+const errorData = await response.json();
+throw new Error(`GitHub API Error (${response.status}): ${errorData.message}`);
+}
+
+} catch (error) {
+console.error('❌ فشل في حفظ البيانات في GitHub Repository:', error.message);
+return false;
+}
+}
+
+// 🔍 الحصول على SHA الحالي للملف
+async getFileSHA(token) {
+try {
+const response = await fetch(`${this.baseUrl}/contents/${this.dataFile}`, {
+method: 'GET',
+headers: {
+'Authorization': `Bearer ${token}`,
+'Accept': 'application/vnd.github.v3+json'
+}
+});
+
+if (response.ok) {
+const fileData = await response.json();
+return fileData.sha;
+} else if (response.status === 404) {
+console.log('📄 الملف غير موجود، سيتم إنشاؤه جديد');
+return 'CREATE_NEW_FILE'; // علامة خاصة لإنشاء ملف جديد
+} else {
+console.warn('⚠️ خطأ في جلب معلومات الملف:', response.status, response.statusText);
+return null;
+}
+} catch (error) {
+console.warn('❌ خطأ في جلب SHA الملف:', error.message);
+return null;
+}
+}
+
+// 📈 زيادة رقم الإصدار
+incrementVersion(currentVersion) {
+if (!currentVersion) return '1.0';
+const version = parseFloat(currentVersion);
+return (version + 0.1).toFixed(1);
+}
+
+// 🔍 التحقق من صحة الـ Token
+async validateToken(token) {
+try {
+const response = await fetch(`${this.baseUrl}`, {
+headers: {
+'Authorization': `Bearer ${token}`,
+'Accept': 'application/vnd.github.v3+json'
+}
+});
+return response.ok;
+} catch (error) {
+return false;
+}
+}
+}
+
+// ===== متغيرات التطبيق =====
+let syncSystem;
+let siteSettings = {};
+let units = [];
+let messages = [];
+let currentUser = null;
+let selectedDates = [];
+let currentUnit = null;
+let currentImages = [];
+let currentAvailability = {};
+
+// تهيئة التطبيق
+async function initApp() {
+console.log('🚀 بدء تهيئة موقع المصداقية...');
+
+try {
+// تهيئة نظام التزامن المركزي
+syncSystem = new GitHubRepoSync();
+
+// تحميل البيانات من GitHub
+const data = await syncSystem.fetchData();
+
+if (data && data.signature === APP_CONFIG.SYNC_CONFIG.DATA_SIGNATURE) {
+// تطبيق البيانات المحملة
+if (data.units) units = data.units;
+if (data.siteSettings) siteSettings = data.siteSettings;
+if (data.messages) messages = data.messages;
+
+console.log('✅ تم تحميل البيانات من GitHub بنجاح');
+} else {
+console.warn('⚠️ فشل في تحميل البيانات، استخدام البيانات الافتراضية');
+loadDefaultData();
+}
+
+// تهيئة العناصر
+setupEventListeners();
+initDarkMode();
+updateFooter();
+loadUnits();
+
+console.log('✅ تم تهيئة الموقع بنجاح');
+
+} catch (error) {
+console.error('❌ خطأ في تهيئة التطبيق:', error);
+loadDefaultData();
+setupEventListeners();
+initDarkMode();
+loadUnits();
+} finally {
+// إخفاء شاشة التحميل
+document.getElementById('loadingSpinner').classList.add('hidden');
+}
+}
+
+// تحميل البيانات الافتراضية
+function loadDefaultData() {
+units = [
+{
+id: 1,
+name: "شقة الخليج الراقية",
+type: "شقة",
+location: "صلالة الجديدة",
+description: "شقة مفروشة بالكامل مع إطلالة رائعة على البحر، تحتوي على غرفتين وصالة ومطبخ مجهز",
+images: [
+"https://picsum.photos/400/300?random=1",
+"https://picsum.photos/400/300?random=2",
+"https://picsum.photos/400/300?random=3"
+],
+availability: generateSampleAvailability(),
+contact: { whatsapp: "+96812345678", phone: "+96812345678" }
+},
+{
+id: 2,
+name: "غرفة المرجان الهادئة",
+type: "غرفة",
+location: "صلالة الوسطى",
+description: "غرفة نظيفة ومريحة مع حمام خاص، مناسبة للأفراد أو الأزواج",
+images: [
+"https://picsum.photos/400/300?random=4",
+"https://picsum.photos/400/300?random=5"
+],
+availability: generateSampleAvailability(),
+contact: { whatsapp: "+96812345679", phone: "+96812345679" }
+}
+];
+
+siteSettings = {
+phone: '+968 2345 6789',
+whatsapp: '+968 9876 5432',
+email: 'info@almosdaqiya.om',
+address: 'صلالة، سلطنة عمان',
+companyName: 'المصداقية لتأجير الوحدات السكنية',
+description: 'نوفر أفضل الوحدات السكنية للإيجار في صلالة وضواحيها بأسعار مناسبة وخدمة متميزة.'
+};
+
+messages = [];
+}
+
+// توليد بيانات التوفر التجريبية
+function generateSampleAvailability() {
+const availability = {};
+const dates = generateDateRange();
+
+dates.forEach(dateStr => {
+const isAvailable = Math.random() > 0.3; // 70% متاح
+const basePrice = 40 + Math.floor(Math.random() * 60); // 40-100 ريال
+
+availability[dateStr] = {
+available: isAvailable,
+price: basePrice
+};
+});
+
+return availability;
+}
+
+// توليد نطاق التواريخ من يونيو إلى سبتمبر
+function generateDateRange() {
+const dates = [];
+const currentYear = new Date().getFullYear();
+const today = new Date();
+// تحديد السنة الصحيحة (إذا كنا في يناير-مايو، استخدم السنة الحالية، وإلا العام القادم)
+const year = today.getMonth() < 5 ? currentYear : currentYear;
+
+const startDate = new Date(year, APP_CONFIG.CALENDAR_START.month, APP_CONFIG.CALENDAR_START.day);
+// إصلاح: نهاية سبتمبر بدلاً من بداية سبتمبر
+const endDate = new Date(year, APP_CONFIG.CALENDAR_END.month, 30); // 30 سبتمبر
+
+for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+dates.push(date.toISOString().split('T')[0]);
+}
+
+return dates;
+}
+
+// إعداد مستمعي الأحداث
+function setupEventListeners() {
+document.getElementById('typeFilter').addEventListener('change', filterUnits);
+document.getElementById('priceFilter').addEventListener('change', filterUnits);
+document.getElementById('locationFilter').addEventListener('change', filterUnits);
+document.getElementById('searchInput').addEventListener('input', filterUnits);
+document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+}
+
+// الوضع الليلي
+function initDarkMode() {
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+document.documentElement.classList.add('dark');
+}
+updateThemeIcon();
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+document.documentElement.classList.toggle('dark', event.matches);
+updateThemeIcon();
+});
+}
+
+function toggleDarkMode() {
+document.documentElement.classList.toggle('dark');
+updateThemeIcon();
+}
+
+function updateThemeIcon() {
+const icon = document.getElementById('theme-icon');
+const isDark = document.documentElement.classList.contains('dark');
+icon.textContent = isDark ? '☀️' : '🌙';
+}
+
+// تحديث تذييل الموقع
+function updateFooter() {
+document.getElementById('footer-company-name').textContent = siteSettings.companyName || 'المصداقية لتأجير الوحدات';
+document.getElementById('footer-description').textContent = siteSettings.description || 'نوفر أفضل الوحدات السكنية للإيجار';
+document.getElementById('footer-whatsapp').textContent = `📱 واتساب: ${siteSettings.whatsapp || '+968 9876 5432'}`;
+document.getElementById('footer-phone').textContent = `📞 هاتف: ${siteSettings.phone || '+968 2345 6789'}`;
+document.getElementById('footer-email').textContent = `✉️ البريد: ${siteSettings.email || 'info@almosdaqiya.om'}`;
+document.getElementById('footer-address').textContent = `📍 العنوان: ${siteSettings.address || 'صلالة، سلطنة عمان'}`;
+}
+
+// تحميل وعرض الوحدات
+function loadUnits() {
+const grid = document.getElementById('unitsGrid');
+grid.innerHTML = '';
+
+if (!units || units.length === 0) {
+grid.innerHTML = `
+<div class="col-span-full text-center py-12">
+<div class="text-6xl mb-4">🏠</div>
+<h3 class="text-xl font-bold text-adaptive mb-2">جاري تحميل الوحدات...</h3>
+<p class="text-adaptive-secondary">إذا لم تظهر الوحدات، تأكد من اتصالك بالإنترنت</p>
+</div>
+`;
+return;
+}
+
+units.forEach(unit => {
+const unitCard = createUnitCard(unit);
+grid.appendChild(unitCard);
+});
+
+// تهيئة المنزلقات
+setTimeout(initSwipers, 100);
+}
+
+// إنشاء بطاقة الوحدة
+function createUnitCard(unit) {
+const card = document.createElement('div');
+card.className = 'neumorphic rounded-2xl overflow-hidden fade-in hover:shadow-2xl transition-all duration-300 cursor-pointer';
+// الحصول على الأسعار الفعلية للأيام القادمة
+const upcomingPrices = getUpcomingPrices(unit, 5);
+const priceRange = getUnitPriceRange(unit);
+
+card.innerHTML = `
+<div class="relative">
+<div class="swiper" id="swiper-${unit.id}">
+<div class="swiper-wrapper">
+${unit.images.map(img => `
+<div class="swiper-slide">
+<img src="${img}" alt="${unit.name}" class="w-full h-48 object-cover">
+</div>
+`).join('')}
+</div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+</div>
+<div class="absolute top-2 right-2 bg-oman-blue text-white px-2 py-1 rounded-lg text-sm font-bold">
+${unit.type}
+</div>
+<div class="absolute top-2 left-2 bg-accent text-white px-2 py-1 rounded-lg text-sm font-bold">
+من ${priceRange.min} ر.ع
+</div>
+</div>
+
+<div class="p-4">
+<h3 class="text-lg font-bold text-adaptive mb-2">${unit.name}</h3>
+<p class="text-sm text-adaptive-secondary mb-2 flex items-center">
+<span class="ml-1">📍</span> ${unit.location}
+</p>
+<p class="text-sm text-adaptive mb-4 line-clamp-2">${unit.description}</p>
+
+<div class="mb-4">
+<h4 class="text-sm font-medium text-adaptive-secondary mb-2">الأيام المتاحة القادمة</h4>
+<div class="grid grid-cols-5 gap-1">
+${upcomingPrices.filter(day => day.available).slice(0, 5).map(day => {
+const dateObj = new Date(day.date);
+const dayName = ARABIC_DAYS[dateObj.getDay()];
+return `
+<div class="text-center p-1 bg-accent text-white rounded text-xs">
+<div class="font-bold">${dayName.substring(0, 3)}</div>
+<div>${dateObj.getDate()}</div>
+<div>${day.price}ر.ع</div>
+</div>
+`;
+}).join('')}
+</div>
+</div>
+
+<div class="flex justify-between items-center">
+<div class="text-lg font-bold text-oman-blue dark:text-oman-light">
+${priceRange.min === priceRange.max
+? `${priceRange.min} ر.ع/ليلة`
+: `${priceRange.min} - ${priceRange.max} ر.ع/ليلة`}
+</div>
+<div class="flex space-x-2 space-x-reverse">
+<button onclick="showUnitDetails(${unit.id})" class="px-3 py-1 bg-oman-blue hover:bg-oman-light text-white rounded-lg text-sm transition-all">
+التفاصيل
+</button>
+<a href="https://wa.me/${unit.contact.whatsapp}?text=${encodeURIComponent('مرحباً، أود الاستفسار عن ' + unit.name)}"
+target="_blank"
+class="px-3 py-1 bg-accent hover:bg-green-600 text-white rounded-lg text-sm transition-all inline-block text-center">
+تواصل
+</a>
+</div>
+</div>
+</div>
+`;
+
+return card;
+}
+
+// تهيئة منزلقات الصور
+function initSwipers() {
+units.forEach(unit => {
+try {
+new Swiper(`#swiper-${unit.id}`, {
+pagination: { el: `#swiper-${unit.id} .swiper-pagination`, clickable: true },
+navigation: {
+nextEl: `#swiper-${unit.id} .swiper-button-next`,
+prevEl: `#swiper-${unit.id} .swiper-button-prev`
+},
+loop: unit.images.length > 1,
+autoplay: {
+delay: 3000,
+disableOnInteraction: false,
+}
+});
+} catch (error) {
+console.warn('خطأ في تهيئة Swiper للوحدة', unit.id, error);
+}
+});
+}
+
+// حساب متوسط سعر الوحدة
+function getUnitAveragePrice(unit) {
+const prices = Object.values(unit.availability)
+.filter(info => info.available)
+.map(info => info.price);
+return prices.length > 0 ? Math.round(prices.reduce((a, b) => a + b, 0) / prices.length) : 50;
+}
+
+// الحصول على نطاق الأسعار للوحدة
+function getUnitPriceRange(unit) {
+const prices = Object.values(unit.availability)
+.filter(info => info.available)
+.map(info => info.price);
+
+if (prices.length === 0) return { min: 50, max: 50 };
+
+const min = Math.min(...prices);
+const max = Math.max(...prices);
+
+return { min, max };
+}
+
+// الحصول على الأسعار الفعلية للأيام القادمة
+function getUpcomingPrices(unit, count = 5) {
+const today = new Date();
+const dates = generateDateRange();
+const upcomingDates = dates.filter(dateStr => {
+const date = new Date(dateStr);
+return date >= today;
+}).slice(0, count);
+
+return upcomingDates.map(dateStr => {
+const dayInfo = unit.availability[dateStr];
+return {
+date: dateStr,
+available: dayInfo ? dayInfo.available : true,
+price: dayInfo ? dayInfo.price : 50
+};
+});
+}
+
+// تصفية الوحدات
+function filterUnits() {
+const filters = {
+type: document.getElementById('typeFilter').value,
+price: document.getElementById('priceFilter').value,
+location: document.getElementById('locationFilter').value,
+search: document.getElementById('searchInput').value.toLowerCase()
+};
+
+const filteredUnits = units.filter(unit => {
+if (filters.type && unit.type !== filters.type) return false;
+if (filters.location && unit.location !== filters.location) return false;
+if (filters.search) {
+const searchText = (unit.name + ' ' + unit.description).toLowerCase();
+if (!searchText.includes(filters.search)) return false;
+}
+if (filters.price) {
+const avgPrice = getUnitAveragePrice(unit);
+const [min, max] = filters.price.split('-').map(p => p.replace('+', ''));
+if (max && (avgPrice < parseInt(min) || avgPrice > parseInt(max))) return false;
+if (!max && avgPrice < parseInt(min)) return false;
+}
+return true;
+});
+
+displayFilteredUnits(filteredUnits);
+}
+
+// عرض الوحدات المصفاة
+function displayFilteredUnits(filteredUnits) {
+const grid = document.getElementById('unitsGrid');
+
+if (filteredUnits.length === 0) {
+grid.innerHTML = `
+<div class="col-span-full text-center py-12">
+<div class="text-6xl mb-4">🔍</div>
+<h3 class="text-xl font-bold text-adaptive mb-2">لا توجد وحدات متاحة</h3>
+<p class="text-adaptive-secondary">جرب تغيير معايير البحث</p>
+</div>
+`;
+return;
+}
+
+grid.innerHTML = '';
+filteredUnits.forEach(unit => {
+const unitCard = createUnitCard(unit);
+grid.appendChild(unitCard);
+});
+
+setTimeout(initSwipers, 100);
+}
+
+// عرض تفاصيل الوحدة (مبسط للآن)
+function showUnitDetails(unitId) {
+const unit = units.find(u => u.id === unitId);
+if (!unit) return;
+
+alert(`تفاصيل الوحدة: ${unit.name}\n\nالنوع: ${unit.type}\nالموقع: ${unit.location}\n\nالوصف: ${unit.description}\n\nللحجز تواصل على:\nواتساب: ${unit.contact.whatsapp}\nهاتف: ${unit.contact.phone}`);
+}
+
+// إدارة تسجيل دخول الإدارة (مبسط للآن)
+function showAdminLogin() {
+const username = prompt('اسم المستخدم:');
+const password = prompt('كلمة المرور:');
+
+if (username === APP_CONFIG.ADMIN_CREDENTIALS.username && password === APP_CONFIG.ADMIN_CREDENTIALS.password) {
+alert('مرحباً بك في لوحة الإدارة!\n\nستتمكن قريباً من:\n- إضافة وحدات جديدة\n- تعديل الأسعار\n- إدارة الحجوزات\n- عرض الرسائل');
+} else {
+alert('بيانات تسجيل الدخول غير صحيحة');
+}
+}
+
+// معالجة إرسال نموذج التواصل (مبسط للآن)
+function handleContactSubmit(event) {
+event.preventDefault();
+alert('شكراً لك! تم إرسال رسالتك بنجاح.\nسنتواصل معك قريباً.');
+closeContactModal();
+}
+
+// إغلاق نافذة التواصل
+function closeContactModal() {
+document.getElementById('contactModal').classList.add('hidden');
+document.getElementById('contactForm').reset();
+}
+
+// تهيئة التطبيق عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', initApp);
+
+// معالج للنقر خارج النوافذ المنبثقة
+document.addEventListener('click', function(event) {
+const modals = ['adminPanel', 'unitModal', 'contactModal'];
+modals.forEach(modalId => {
+const modal = document.getElementById(modalId);
+if (event.target === modal) {
+modal.classList.add('hidden');
+}
+});
+});
+
+console.log('🏠 تم تحميل موقع المصداقية لتأجير الوحدات السكنية');
+console.log('📍 صلالة، سلطنة عمان');
+console.log('🔗 GitHub Repository: https://github.com/tammam00/almesdaqiah-data');
 </script>
 </body>
 </html>
