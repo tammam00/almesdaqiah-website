@@ -431,15 +431,15 @@ animation: loading 1.5s infinite;
 <form id="contactForm" class="space-y-4">
 <div>
 <label class="block text-sm font-medium text-adaptive-secondary mb-2">الاسم</label>
-<input type="text" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+<input type="text" name="name" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
 </div>
 <div>
 <label class="block text-sm font-medium text-adaptive-secondary mb-2">رقم الهاتف</label>
-<input type="tel" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+<input type="tel" name="phone" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
 </div>
 <div>
 <label class="block text-sm font-medium text-adaptive-secondary mb-2">الرسالة</label>
-<textarea required rows="4" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base"></textarea>
+<textarea name="message" required rows="4" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base"></textarea>
 </div>
 <button type="submit" class="w-full bg-accent hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-all duration-300">
 إرسال الرسالة
@@ -1104,31 +1104,97 @@ grid.appendChild(unitCard);
 setTimeout(initSwipers, 100);
 }
 
-// عرض تفاصيل الوحدة (مبسط للآن)
+// عرض تفاصيل الوحدة
 function showUnitDetails(unitId) {
 const unit = units.find(u => u.id === unitId);
 if (!unit) return;
 
-alert(`تفاصيل الوحدة: ${unit.name}\n\nالنوع: ${unit.type}\nالموقع: ${unit.location}\n\nالوصف: ${unit.description}\n\nللحجز تواصل على:\nواتساب: ${unit.contact.whatsapp}\nهاتف: ${unit.contact.phone}`);
+currentUnit = unit;
+showUnitModal(unit);
 }
 
-// إدارة تسجيل دخول الإدارة (مبسط للآن)
+// إدارة تسجيل دخول الإدارة
 function showAdminLogin() {
-const username = prompt('اسم المستخدم:');
-const password = prompt('كلمة المرور:');
+showLoginModal();
+}
+
+// عرض نافذة تسجيل الدخول
+function showLoginModal() {
+const modal = document.getElementById('adminPanel');
+modal.innerHTML = `
+<div class="modal-container flex items-center justify-center">
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-bold text-adaptive">تسجيل دخول الإدارة</h3>
+<button onclick="closeModal('adminPanel')" class="text-adaptive-secondary hover:text-adaptive">
+<span class="text-2xl">×</span>
+</button>
+</div>
+<form id="adminLoginForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">اسم المستخدم</label>
+<input type="text" id="adminUsername" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">كلمة المرور</label>
+<input type="password" id="adminPassword" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<button type="submit" class="w-full bg-oman-blue hover:bg-oman-light text-white py-3 rounded-lg font-medium transition-all duration-300">
+تسجيل الدخول
+</button>
+</form>
+</div>
+</div>
+</div>
+`;
+
+modal.classList.remove('hidden');
+
+// إضافة مستمع للنموذج
+document.getElementById('adminLoginForm').addEventListener('submit', handleAdminLogin);
+}
+
+// معالجة تسجيل دخول الإدارة
+function handleAdminLogin(event) {
+event.preventDefault();
+
+const username = document.getElementById('adminUsername').value;
+const password = document.getElementById('adminPassword').value;
 
 if (username === APP_CONFIG.ADMIN_CREDENTIALS.username && password === APP_CONFIG.ADMIN_CREDENTIALS.password) {
-alert('مرحباً بك في لوحة الإدارة!\n\nستتمكن قريباً من:\n- إضافة وحدات جديدة\n- تعديل الأسعار\n- إدارة الحجوزات\n- عرض الرسائل');
+currentUser = { username, role: 'admin' };
+showAdminDashboard();
 } else {
-alert('بيانات تسجيل الدخول غير صحيحة');
+showNotification('بيانات تسجيل الدخول غير صحيحة', 'error');
 }
 }
 
-// معالجة إرسال نموذج التواصل (مبسط للآن)
+// معالجة إرسال نموذج التواصل
 function handleContactSubmit(event) {
 event.preventDefault();
-alert('شكراً لك! تم إرسال رسالتك بنجاح.\nسنتواصل معك قريباً.');
+
+const formData = new FormData(event.target);
+const messageData = {
+id: Date.now(),
+name: formData.get('name') || event.target.elements[0].value,
+phone: formData.get('phone') || event.target.elements[1].value,
+message: formData.get('message') || event.target.elements[2].value,
+date: new Date().toISOString(),
+status: 'new'
+};
+
+// إضافة الرسالة محلياً
+messages.push(messageData);
+
+// عرض رسالة نجاح
+showNotification('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً', 'success');
 closeContactModal();
+
+// محاولة حفظ في GitHub (إذا كان متاحاً)
+if (currentUser && currentUser.role === 'admin') {
+saveAllData();
+}
 }
 
 // إغلاق نافذة التواصل
@@ -1150,6 +1216,409 @@ modal.classList.add('hidden');
 }
 });
 });
+
+// ===== الوظائف المفقودة =====
+
+// عرض نافذة تفاصيل الوحدة
+function showUnitModal(unit) {
+const modal = document.getElementById('unitModal');
+const upcomingPrices = getUpcomingPrices(unit, 10);
+const priceRange = getUnitPriceRange(unit);
+
+modal.innerHTML = `
+<div class="modal-container flex items-center justify-center">
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl mx-4">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-2xl font-bold text-adaptive">${unit.name}</h3>
+<button onclick="closeModal('unitModal')" class="text-adaptive-secondary hover:text-adaptive">
+<span class="text-2xl">×</span>
+</button>
+</div>
+
+<!-- معرض الصور -->
+<div class="mb-6">
+<div class="swiper" id="unit-modal-swiper">
+<div class="swiper-wrapper">
+${unit.images.map(img => `
+<div class="swiper-slide">
+<img src="${img}" alt="${unit.name}" class="w-full h-64 object-cover rounded-lg">
+</div>
+`).join('')}
+</div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+</div>
+</div>
+
+<!-- تفاصيل الوحدة -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<h4 class="text-lg font-bold text-adaptive mb-3">تفاصيل الوحدة</h4>
+<div class="space-y-3">
+<div class="flex items-center space-x-3 space-x-reverse">
+<span class="text-2xl">🏠</span>
+<div>
+<p class="font-medium text-adaptive">${unit.type}</p>
+<p class="text-sm text-adaptive-secondary">نوع الوحدة</p>
+</div>
+</div>
+<div class="flex items-center space-x-3 space-x-reverse">
+<span class="text-2xl">📍</span>
+<div>
+<p class="font-medium text-adaptive">${unit.location}</p>
+<p class="text-sm text-adaptive-secondary">الموقع</p>
+</div>
+</div>
+<div class="flex items-center space-x-3 space-x-reverse">
+<span class="text-2xl">💰</span>
+<div>
+<p class="font-medium text-adaptive">${priceRange.min} - ${priceRange.max} ر.ع</p>
+<p class="text-sm text-adaptive-secondary">السعر / ليلة</p>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<h4 class="text-lg font-bold text-adaptive mb-3">التوفر القادم</h4>
+<div class="space-y-2 max-h-48 overflow-y-auto">
+${upcomingPrices.filter(day => day.available).slice(0, 10).map(day => {
+const dateObj = new Date(day.date);
+const dayName = ARABIC_DAYS[dateObj.getDay()];
+return `
+<div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
+<span class="text-adaptive">${dayName} ${dateObj.getDate()}/${dateObj.getMonth() + 1}</span>
+<span class="font-bold text-accent">${day.price} ر.ع</span>
+</div>
+`;
+}).join('')}
+</div>
+</div>
+</div>
+
+<!-- الوصف -->
+<div class="mb-6">
+<h4 class="text-lg font-bold text-adaptive mb-3">الوصف</h4>
+<p class="text-adaptive-secondary leading-relaxed">${unit.description}</p>
+</div>
+
+<!-- أزرار التواصل -->
+<div class="flex flex-col sm:flex-row gap-4">
+<a href="https://wa.me/${unit.contact.whatsapp}?text=${encodeURIComponent('مرحباً، أود حجز ' + unit.name)}"
+target="_blank"
+class="flex-1 bg-accent hover:bg-green-600 text-white py-3 px-6 rounded-lg font-medium transition-all text-center">
+📱 تواصل عبر واتساب
+</a>
+<a href="tel:${unit.contact.phone}"
+class="flex-1 bg-oman-blue hover:bg-oman-light text-white py-3 px-6 rounded-lg font-medium transition-all text-center">
+📞 اتصل الآن
+</a>
+<button onclick="showContactModal()"
+class="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg font-medium transition-all">
+✉️ إرسال رسالة
+</button>
+</div>
+</div>
+</div>
+</div>
+`;
+
+modal.classList.remove('hidden');
+// تهيئة Swiper للنافذة المنبثقة
+setTimeout(() => {
+new Swiper('#unit-modal-swiper', {
+pagination: { el: '#unit-modal-swiper .swiper-pagination', clickable: true },
+navigation: {
+nextEl: '#unit-modal-swiper .swiper-button-next',
+prevEl: '#unit-modal-swiper .swiper-button-prev'
+},
+loop: unit.images.length > 1,
+autoplay: { delay: 4000, disableOnInteraction: false }
+});
+}, 100);
+}
+
+// عرض نافذة التواصل
+function showContactModal() {
+document.getElementById('contactModal').classList.remove('hidden');
+}
+
+// إغلاق النوافذ المنبثقة
+function closeModal(modalId) {
+document.getElementById(modalId).classList.add('hidden');
+}
+// عرض لوحة الإدارة
+function showAdminDashboard() {
+const modal = document.getElementById('adminPanel');
+modal.innerHTML = `
+<div class="modal-container">
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-2xl font-bold text-adaptive">لوحة إدارة المصداقية</h3>
+<button onclick="logout()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-all">
+تسجيل خروج
+</button>
+</div>
+
+<!-- إحصائيات سريعة -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-lg">
+<div class="text-2xl font-bold">${units.length}</div>
+<div class="text-sm opacity-90">إجمالي الوحدات</div>
+</div>
+<div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg">
+<div class="text-2xl font-bold">${units.filter(u => Object.values(u.availability).some(a => a.available)).length}</div>
+<div class="text-sm opacity-90">الوحدات المتاحة</div>
+</div>
+<div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-lg">
+<div class="text-2xl font-bold">${messages.length}</div>
+<div class="text-sm opacity-90">الرسائل الجديدة</div>
+</div>
+<div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 rounded-lg">
+<div class="text-2xl font-bold">${Math.round(units.reduce((sum, unit) => sum + getUnitAveragePrice(unit), 0) / units.length) || 0}</div>
+<div class="text-sm opacity-90">متوسط السعر (ر.ع)</div>
+</div>
+</div>
+
+<!-- علامات التبويب -->
+<div class="border-b border-gray-200 dark:border-gray-700 mb-6">
+<nav class="flex space-x-8 space-x-reverse">
+<button onclick="showAdminTab('units')" class="admin-tab-btn py-2 px-1 border-b-2 border-oman-blue text-oman-blue font-medium">
+إدارة الوحدات
+</button>
+<button onclick="showAdminTab('messages')" class="admin-tab-btn py-2 px-1 border-b-2 border-transparent text-adaptive-secondary hover:text-adaptive">
+الرسائل (${messages.filter(m => m.status === 'new').length})
+</button>
+<button onclick="showAdminTab('settings')" class="admin-tab-btn py-2 px-1 border-b-2 border-transparent text-adaptive-secondary hover:text-adaptive">
+إعدادات الموقع
+</button>
+</nav>
+</div>
+
+<!-- محتوى علامات التبويب -->
+<div id="admin-tab-content">
+${getUnitsAdminContent()}
+</div>
+</div>
+</div>
+</div>
+`;
+
+modal.classList.remove('hidden');
+}
+// الحصول على محتوى إدارة الوحدات
+function getUnitsAdminContent() {
+return `
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<h4 class="text-lg font-bold text-adaptive">الوحدات السكنية</h4>
+<button onclick="showAddUnitForm()" class="bg-accent hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all">
++ إضافة وحدة جديدة
+</button>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+${units.map(unit => `
+<div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+<div class="flex justify-between items-start mb-3">
+<h5 class="font-bold text-adaptive">${unit.name}</h5>
+<div class="flex space-x-2 space-x-reverse">
+<button onclick="editUnit(${unit.id})" class="text-blue-500 hover:text-blue-700">
+✏️
+</button>
+<button onclick="deleteUnit(${unit.id})" class="text-red-500 hover:text-red-700">
+🗑️
+</button>
+</div>
+</div>
+<p class="text-sm text-adaptive-secondary mb-2">${unit.type} - ${unit.location}</p>
+<p class="text-sm text-adaptive mb-3">${unit.description.substring(0, 100)}...</p>
+<div class="text-sm">
+<span class="text-accent font-medium">${getUnitPriceRange(unit).min} - ${getUnitPriceRange(unit).max} ر.ع/ليلة</span>
+</div>
+</div>
+`).join('')}
+</div>
+</div>
+`;
+}
+// عرض علامة تبويب في الإدارة
+function showAdminTab(tab) {
+// تحديث أزرار التبويب
+document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+btn.className = 'admin-tab-btn py-2 px-1 border-b-2 border-transparent text-adaptive-secondary hover:text-adaptive';
+});
+event.target.className = 'admin-tab-btn py-2 px-1 border-b-2 border-oman-blue text-oman-blue font-medium';
+
+// تحديث المحتوى
+const content = document.getElementById('admin-tab-content');
+switch(tab) {
+case 'units':
+content.innerHTML = getUnitsAdminContent();
+break;
+case 'messages':
+content.innerHTML = getMessagesAdminContent();
+break;
+case 'settings':
+content.innerHTML = getSettingsAdminContent();
+break;
+}
+}
+// محتوى إدارة الرسائل
+function getMessagesAdminContent() {
+return `
+<div class="space-y-4">
+<h4 class="text-lg font-bold text-adaptive">الرسائل الواردة</h4>
+${messages.length === 0 ?
+'<p class="text-adaptive-secondary">لا توجد رسائل جديدة</p>' :
+messages.map(msg => `
+<div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 ${msg.status === 'new' ? 'bg-blue-50 dark:bg-blue-900/20' : ''}">
+<div class="flex justify-between items-start mb-2">
+<h5 class="font-bold text-adaptive">${msg.name}</h5>
+<span class="text-xs text-adaptive-secondary">${new Date(msg.date).toLocaleString('ar-SA')}</span>
+</div>
+<p class="text-sm text-adaptive-secondary mb-2">📱 ${msg.phone}</p>
+<p class="text-adaptive">${msg.message}</p>
+${msg.status === 'new' ?
+`<button onclick="markMessageAsRead(${msg.id})" class="mt-2 text-sm bg-oman-blue text-white px-3 py-1 rounded">تم القراءة</button>` :
+'<span class="text-xs text-green-600">تم القراءة</span>'
+}
+</div>
+`).join('')
+}
+</div>
+`;
+}
+
+// محتوى إعدادات الموقع
+function getSettingsAdminContent() {
+return `
+<div class="space-y-6">
+<h4 class="text-lg font-bold text-adaptive">إعدادات الموقع</h4>
+<form id="settingsForm" class="space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">اسم الشركة</label>
+<input type="text" value="${siteSettings.companyName || ''}" name="companyName" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">رقم الهاتف</label>
+<input type="tel" value="${siteSettings.phone || ''}" name="phone" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">رقم واتساب</label>
+<input type="tel" value="${siteSettings.whatsapp || ''}" name="whatsapp" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">البريد الإلكتروني</label>
+<input type="email" value="${siteSettings.email || ''}" name="email" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">العنوان</label>
+<input type="text" value="${siteSettings.address || ''}" name="address" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">وصف الشركة</label>
+<textarea name="description" rows="3" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">${siteSettings.description || ''}</textarea>
+</div>
+<button type="submit" class="bg-oman-blue hover:bg-oman-light text-white px-6 py-3 rounded-lg transition-all">
+حفظ الإعدادات
+</button>
+</form>
+</div>
+`;
+}
+// تسجيل خروج الإدارة
+function logout() {
+currentUser = null;
+closeModal('adminPanel');
+showNotification('تم تسجيل الخروج بنجاح', 'success');
+}
+
+// عرض الإشعارات
+function showNotification(message, type = 'info') {
+const notification = document.createElement('div');
+notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-white font-medium transform transition-all duration-300 translate-x-full`;
+
+switch(type) {
+case 'success':
+notification.classList.add('bg-green-500');
+break;
+case 'error':
+notification.classList.add('bg-red-500');
+break;
+case 'warning':
+notification.classList.add('bg-yellow-500');
+break;
+default:
+notification.classList.add('bg-blue-500');
+}
+
+notification.textContent = message;
+document.body.appendChild(notification);
+
+// إظهار الإشعار
+setTimeout(() => {
+notification.classList.remove('translate-x-full');
+}, 100);
+
+// إخفاء الإشعار
+setTimeout(() => {
+notification.classList.add('translate-x-full');
+setTimeout(() => {
+document.body.removeChild(notification);
+}, 300);
+}, 3000);
+}
+// وظائف إضافية للإدارة (مبسطة)
+function markMessageAsRead(messageId) {
+const message = messages.find(m => m.id === messageId);
+if (message) {
+message.status = 'read';
+showAdminTab('messages');
+showNotification('تم تحديث حالة الرسالة', 'success');
+}
+}
+
+function showAddUnitForm() {
+showNotification('قريباً: نموذج إضافة وحدة جديدة', 'info');
+}
+
+function editUnit(unitId) {
+showNotification('قريباً: تعديل الوحدة رقم ' + unitId, 'info');
+}
+
+function deleteUnit(unitId) {
+if (confirm('هل أنت متأكد من حذف هذه الوحدة؟')) {
+const index = units.findIndex(u => u.id === unitId);
+if (index > -1) {
+units.splice(index, 1);
+showAdminTab('units');
+loadUnits();
+showNotification('تم حذف الوحدة بنجاح', 'success');
+}
+}
+}
+
+// حفظ جميع البيانات
+function saveAllData() {
+const data = {
+units,
+messages,
+siteSettings,
+signature: APP_CONFIG.SYNC_CONFIG.DATA_SIGNATURE,
+lastUpdate: new Date().toISOString(),
+version: '1.0'
+};
+
+if (currentUser && syncSystem) {
+syncSystem.saveData(data, APP_CONFIG.GITHUB_CONFIG.token);
+}
+}
 
 console.log('🏠 تم تحميل موقع المصداقية لتأجير الوحدات السكنية');
 console.log('📍 صلالة، سلطنة عمان');
