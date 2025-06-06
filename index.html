@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المصداقية لتأجير الوحدات السكنية</title>
+<meta name="description" content="موقع المصداقية لتأجير الوحدات السكنية في صلالة - أفضل الأسعار وأجود الخدمات">
+<meta name="keywords" content="تأجير، وحدات سكنية، صلالة، عمان، شقق، غرف، فلل">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+'cairo': ['Cairo', 'sans-serif'],
+},
+colors: {
+'oman-blue': '#003f7f',
+'oman-light': '#4a90e2',
+'accent': '#22c55e',
+'warning': '#f59e0b',
+}
+}
+}
+}
+</script>
+<style>
+* {
+font-family: 'Cairo', sans-serif;
+}
+
+.neumorphic {
+background: #f7fafc;
+box-shadow: 20px 20px 60px #d1d9e6, -20px -20px 60px #ffffff;
+}
+
+.dark .neumorphic {
+background: #2d3748;
+box-shadow: 20px 20px 60px #1a202c, -20px -20px 60px #4a5568;
+}
+
+.swiper-pagination-bullet {
+background: #4a90e2;
+}
+
+.available-day {
+background: linear-gradient(45deg, #22c55e, #16a34a);
+color: white;
+}
+
+.booked-day {
+background: linear-gradient(45deg, #ef4444, #dc2626);
+color: white;
+}
+
+.selected-day {
+background: linear-gradient(45deg, #4a90e2, #3b82f6);
+color: white;
+border: 2px solid #1d4ed8;
+}
+
+.fade-in {
+animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+from { opacity: 1; transform: translateY(0); }
+to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* إصلاح مشكلة التمرير في النوافذ المنبثقة */
+.modal-container {
+overflow-y: auto;
+max-height: 100vh;
+padding: 1rem;
+}
+
+.modal-content {
+max-height: calc(100vh - 2rem);
+overflow-y: auto;
+}
+
+/* إصلاح مشكلة ألوان النصوص */
+.text-adaptive {
+color: #374151;
+}
+
+.dark .text-adaptive {
+color: #f3f4f6;
+}
+
+.text-adaptive-secondary {
+color: #6b7280;
+}
+
+.dark .text-adaptive-secondary {
+color: #d1d5db;
+}
+
+/* جدول التقويم المنزلق */
+.calendar-slider {
+max-height: 400px;
+overflow-y: auto;
+border: 2px solid #e5e7eb;
+border-radius: 12px;
+background: #f9fafb;
+}
+
+.dark .calendar-slider {
+border-color: #374151;
+background: #1f2937;
+}
+
+.calendar-day-row {
+min-height: 50px;
+transition: all 0.3s ease;
+}
+
+.calendar-day-row:hover {
+background-color: #f3f4f6;
+}
+
+.dark .calendar-day-row:hover {
+background-color: #374151;
+}
+
+/* معاينة الصور */
+.image-preview {
+position: relative;
+display: inline-block;
+margin: 8px;
+}
+
+.image-preview img {
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 12px;
+border: 3px solid #e5e7eb;
+transition: all 0.3s ease;
+}
+
+.image-preview:hover img {
+border-color: #4a90e2;
+}
+
+.remove-image-btn {
+position: absolute;
+top: -10px;
+right: -10px;
+background: #ef4444;
+color: white;
+border-radius: 50%;
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 16px;
+font-weight: bold;
+box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.remove-image-btn:hover {
+background: #dc2626;
+}
+
+/* تحسين شكل رفع الملفات */
+.file-upload-area {
+border: 3px dashed #d1d5db;
+border-radius: 12px;
+padding: 40px;
+text-align: center;
+transition: all 0.3s ease;
+cursor: pointer;
+}
+
+.file-upload-area:hover {
+border-color: #4a90e2;
+background-color: #f8fafc;
+}
+
+.dark .file-upload-area {
+border-color: #4b5563;
+background-color: #1f2937;
+}
+
+.dark .file-upload-area:hover {
+border-color: #4a90e2;
+background-color: #374151;
+}
+
+/* مؤشر حالة التزامن */
+.sync-indicator {
+position: fixed;
+top: 20px;
+left: 20px;
+z-index: 1000;
+display: none;
+align-items: center;
+gap: 8px;
+padding: 8px 12px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.sync-online {
+background: #10b981;
+color: white;
+}
+
+.sync-offline {
+background: #ef4444;
+color: white;
+}
+
+.sync-syncing {
+background: #f59e0b;
+color: white;
+}
+
+.pulse-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: currentColor;
+animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.5; }
+}
+</style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-all duration-300">
+<!-- مؤشر حالة التزامن (مخفي للمستخدمين العاديين) -->
+<div id="syncIndicator" class="sync-indicator sync-offline">
+<div class="pulse-dot"></div>
+<span id="syncStatus">غير متصل</span>
+</div>
+
+<!-- Header -->
+<header class="bg-white dark:bg-gray-800 shadow-lg transition-all duration-300">
+<div class="container mx-auto px-4 py-4">
+<div class="flex justify-between items-center">
+<div class="flex items-center space-x-4 space-x-reverse">
+<div class="w-12 h-12 bg-gradient-to-br from-oman-blue to-oman-light rounded-lg flex items-center justify-center">
+<span class="text-white font-bold text-xl">م</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold text-oman-blue dark:text-oman-light">المصداقية</h1>
+<p class="text-sm text-adaptive-secondary">لتأجير الوحدات السكنية</p>
+</div>
+</div>
+
+<div class="flex items-center space-x-4 space-x-reverse">
+<button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300">
+<span id="theme-icon" class="text-xl">🌙</span>
+</button>
+<button onclick="showAdminLogin()" class="px-4 py-2 bg-oman-blue hover:bg-oman-light text-white rounded-lg transition-all duration-300">
+لوحة الإدارة
+</button>
+</div>
+</div>
+</div>
+</header>
+
+<!-- Main Content -->
+<main id="main-content" class="container mx-auto px-4 py-8">
+<!-- Filters Section -->
+<div class="neumorphic rounded-2xl p-6 mb-8 fade-in">
+<h2 class="text-xl font-bold text-adaptive mb-4">البحث والفلترة</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">النوع</label>
+<select id="typeFilter" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+<option value="">جميع الأنواع</option>
+<option value="شقة">شقق</option>
+<option value="غرفة">غرف</option>
+<option value="فيلا">فلل</option>
+<option value="بيت">بيوت</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">السعر (ريال عماني)</label>
+<select id="priceFilter" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+<option value="">جميع الأسعار</option>
+<option value="0-30">أقل من 30</option>
+<option value="30-60">30 - 60</option>
+<option value="60-90">60 - 90</option>
+<option value="90+">90 وأكثر</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">الموقع</label>
+<select id="locationFilter" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+<option value="">جميع المواقع</option>
+<option value="صلالة الجديدة">صلالة الجديدة</option>
+<option value="صلالة الوسطى">صلالة الوسطى</option>
+<option value="صلالة الغربية">صلالة الغربية</option>
+<option value="عوقد">عوقد</option>
+<option value="السعادة">السعادة</option>
+<option value="صحنوت">صحنوت</option>
+<option value="ريسوت">ريسوت</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">البحث</label>
+<input id="searchInput" type="text" placeholder="اسم الوحدة أو الوصف..." class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+</div>
+</div>
+
+<!-- Units Grid -->
+<div id="unitsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Units will be loaded here -->
+</div>
+
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+<div class="bg-white dark:bg-gray-800 rounded-lg p-6 flex items-center space-x-4 space-x-reverse">
+<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-oman-blue"></div>
+<span class="text-adaptive font-medium">جاري تحميل البيانات...</span>
+</div>
+</div>
+</main>
+
+<!-- Admin Panel -->
+<div id="adminPanel" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-75">
+<div class="modal-container flex items-center justify-center">
+<div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl">
+<!-- Admin content will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Unit Details Modal -->
+<div id="unitModal" class="hidden fixed inset-0 z-40 bg-gray-900 bg-opacity-75">
+<div class="modal-container flex items-center justify-center">
+<div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl">
+<!-- Unit details will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="hidden fixed inset-0 z-40 bg-gray-900 bg-opacity-75">
+<div class="modal-container flex items-center justify-center">
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4">
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold text-adaptive">إرسال رسالة</h3>
+<button onclick="closeContactModal()" class="text-adaptive-secondary hover:text-adaptive">
+<span class="text-2xl">×</span>
+</button>
+</div>
+<form id="contactForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">الاسم</label>
+<input type="text" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">رقم الهاتف</label>
+<input type="tel" required class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base">
+</div>
+<div>
+<label class="block text-sm font-medium text-adaptive-secondary mb-2">الرسالة</label>
+<textarea required rows="4" class="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 text-adaptive text-base"></textarea>
+</div>
+<button type="submit" class="w-full bg-accent hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-all duration-300">
+إرسال الرسالة
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-oman-blue dark:bg-gray-800 text-white py-8 mt-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div>
+<h3 class="text-xl font-bold mb-4" id="footer-company-name">المصداقية لتأجير الوحدات</h3>
+<p class="text-gray-300" id="footer-description">نوفر أفضل الوحدات السكنية للإيجار في صلالة وضواحيها بأسعار مناسبة وخدمة متميزة.</p>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-4">التواصل</h3>
+<div class="space-y-2">
+<p id="footer-whatsapp">📱 واتساب: +968 9876 5432</p>
+<p id="footer-phone">📞 هاتف: +968 2345 6789</p>
+<p id="footer-email">✉️ البريد: info@almosdaqiya.om</p>
+<p id="footer-address">📍 العنوان: صلالة، سلطنة عمان</p>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-4">روابط سريعة</h3>
+<div class="space-y-2">
+<a href="#" class="block hover:text-oman-light transition-colors">سياسة الخصوصية</a>
+<a href="#" class="block hover:text-oman-light transition-colors">شروط الاستخدام</a>
+<a href="#" class="block hover:text-oman-light transition-colors">من نحن</a>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-600 mt-8 pt-8 text-center">
+<p>&copy; 2024 المصداقية لتأجير الوحدات السكنية. جميع الحقوق محفوظة.</p>
+<p class="text-sm text-gray-400 mt-2">تم التطوير بـ ❤️ في صلالة، عمان</p>
+</div>
+</div>
+</footer>
+
+<script>
+// ===== إعدادات التطبيق =====
+const APP_CONFIG = {
+MAX_IMAGES: 10,
+MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
+CALENDAR_START: { month: 5, day: 1 }, // يونيو 1
+CALENDAR_END: { month: 8, day: 1 }, // سبتمبر 1
+ADMIN_CREDENTIALS: { username: 'AbuSalim', password: '19802002' },
+
+// إعدادات GitHub Repository المنفصل للبيانات
+GITHUB_CONFIG: {
+owner: 'tammam00', // اسم المستخدم في GitHub
+repo: 'almesdaqiah-data', // اسم مستودع البيانات
+branch: 'main', // الفرع الأساسي
+dataFile: 'data.json', // اسم ملف البيانات
+token: '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' // التوكن الخاص بك
+},
+
+// إعدادات التزامن العامة
+SYNC_CONFIG: {
+SYNC_INTERVAL: 10, // تردد التحقق (بالثواني)
+MAX_RETRIES: 3, // الحد الأقصى للمحاولات
+DATA_SIGNATURE: 'ALMOSDAQIYA_RENTAL_DATA_V2'
+}
+};
+
+// باقي الكود JavaScript هنا...
+// (سأضيفه في commit منفصل لتسهيل القراءة)
+console.log('🏠 موقع المصداقية لتأجير الوحدات السكنية');
+console.log('📡 جاري تحميل البيانات من:', APP_CONFIG.GITHUB_CONFIG);
+// TODO: إضافة باقي كود JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+console.log('✅ تم تحميل الموقع بنجاح');
+// سيتم إضافة باقي الوظائف قريباً
+});
+</script>
+</body>
+</html>
